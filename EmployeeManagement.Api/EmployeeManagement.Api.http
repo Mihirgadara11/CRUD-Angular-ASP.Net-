@@ -1,0 +1,11 @@
+@EmployeeManagement.Api_HostAddress = https://localhost:7001
+
+GET {{EmployeeManagement.Api_HostAddress}}/api/employees
+Accept: application/json
+
+###
+
+GET {{EmployeeManagement.Api_HostAddress}}/api/employees/1
+Accept: application/json
+
+###

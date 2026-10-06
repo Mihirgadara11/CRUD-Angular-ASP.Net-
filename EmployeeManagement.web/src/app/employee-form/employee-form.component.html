@@ -1,0 +1,41 @@
+<div class="employee-form">
+  <h2>{{ isEditMode ? 'Edit' : 'Add' }} Employee</h2>
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label>Name</label>
+    <input type="text" formControlName="name" />
+    <div class="field-error" *ngIf="f['name'].touched && f['name'].invalid">
+      Name is required (min 2 characters).
+    </div>
+
+    <label>Email</label>
+    <input type="email" formControlName="email" />
+    <div class="field-error" *ngIf="f['email'].touched && f['email'].invalid">
+      A valid email is required.
+    </div>
+
+    <label>Salary</label>
+    <input type="number" formControlName="salary" />
+    <div class="field-error" *ngIf="f['salary'].touched && f['salary'].invalid">
+      Salary must be greater than 0.
+    </div>
+
+    <label>Department</label>
+    <select formControlName="departmentId">
+      <option [ngValue]="null" disabled>Select department</option>
+      <option [ngValue]="1">Engineering</option>
+      <option [ngValue]="2">Sales</option>
+      <option [ngValue]="3">HR</option>
+    </select>
+    <div class="field-error" *ngIf="f['departmentId'].touched && f['departmentId'].invalid">
+      Department is required.
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="isSubmitting" class="btn-primary">
+        {{ isSubmitting ? 'Saving...' : 'Save' }}
+      </button>
+      <button (click)="onCancel()" class="btn-cancel">Cancel</button>
+    </div>
+  </form>
+</div>
