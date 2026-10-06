@@ -1,0 +1,49 @@
+<div class="employee-list">
+  <h2>Employees</h2>
+  <div class="toolbar">
+    <input
+      type="text"
+      placeholder="Search by name or email..."
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange()" />
+    <a routerLink="/employees/new" class="btn-add">+ Add Employee</a>
+  </div>
+  <div *ngIf="isLoading" class="loading">Loading employees...</div>
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+  <table *ngIf="!isLoading && employees.length > 0">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Department</th>
+        <th>Salary</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of employees">
+        <td>{{ emp.name }}</td>
+        <td>{{ emp.email }}</td>
+        <td>{{ emp.departmentName }}</td>
+        <td>{{ emp.salary | currency }}</td>
+        <td class="actions">
+          <a [routerLink]="['/employees', emp.employeeId]" class="btn-edit">Edit</a>
+          <button (click)="confirmDelete(emp)" class="btn-delete">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!isLoading && employees.length === 0 && !errorMessage" class="empty-state">
+    No employees found.
+  </div>
+  <!-- Delete confirmation modal -->
+  <div class="modal-backdrop" *ngIf="employeeToDelete">
+    <div class="modal">
+      <p>Delete <strong>{{ employeeToDelete.name }}</strong>? This cannot be undone.</p>
+      <div class="modal-actions">
+        <button (click)="deleteConfirmed()" class="btn-danger">Delete</button>
+        <button (click)="cancelDelete()" class="btn-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
